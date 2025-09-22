@@ -13,6 +13,7 @@ defmodule Mix.Tasks.Seed do
     IO.puts("Dropping tables")
     Postgrex.query!(DB, "DROP TABLE IF EXISTS fruits", [], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "DROP TABLE IF EXISTS users", [], pool: DBConnection.ConnectionPool)
+    Postgrex.query!(DB, "DROP TABLE IF EXISTS items", [], pool: DBConnection.ConnectionPool)
   end
 
   defp create_tables() do
@@ -28,6 +29,13 @@ defmodule Mix.Tasks.Seed do
     Postgrex.query!(
       DB,
       "Create TABLE users (id SERIAL, username VARCHAR(255) NOT NULL, password_hash CHAR(72) NOT NULL)",
+      [],
+      pool: DBConnection.ConnectionPool
+    )
+
+    Postgrex.query!(
+      DB,
+      "Create TABLE items (directory TEXT NOT NULL PRIMARY KEY, parent_dir TEXT, default_dir TEXT NOT NULL, type TEXT NOT NULL)",
       [],
       pool: DBConnection.ConnectionPool
     )
@@ -52,6 +60,27 @@ defmodule Mix.Tasks.Seed do
       DB,
       "INSERT INTO users(username, password_hash) VALUES($1, $2)",
       ["a", Bcrypt.hash_pwd_salt("a")],
+      pool: DBConnection.ConnectionPool
+    )
+
+    Postgrex.query!(
+      DB,
+      "INSERT INTO items(directory, parent_dir, default_dir, type) VALUES($1, $2, $3, $4)",
+      ["ROOT", "ROOT", "Root", "folder"],
+      pool: DBConnection.ConnectionPool
+    )
+
+    Postgrex.query!(
+      DB,
+      "INSERT INTO items(directory, parent_dir, default_dir, type) VALUES($1, $2, $3, $4)",
+      ["COLORS", "ROOT", "colors", "folder"],
+      pool: DBConnection.ConnectionPool
+    )
+
+    Postgrex.query!(
+      DB,
+      "INSERT INTO items(directory, parent_dir, default_dir, type) VALUES($1, $2, $3, $4)",
+      ["F1", "COLORS", "colors.txt", "file"],
       pool: DBConnection.ConnectionPool
     )
   end
