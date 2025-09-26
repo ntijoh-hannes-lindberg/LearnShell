@@ -3,6 +3,7 @@ defmodule Pluggy.Router do
   use Plug.Debugger
 
   alias Pluggy.FruitController
+  alias Pluggy.ItemController
   alias Pluggy.UserController
 
   plug(Plug.Static, at: "/", from: :pluggy)
@@ -21,6 +22,12 @@ defmodule Pluggy.Router do
   plug(:match)
   plug(:dispatch)
 
+  get("/learnshell", do: ItemController.index(conn))
+
+  post("/users/login", do: UserController.login(conn, conn.body_params))
+  post("/users/logout", do: UserController.logout(conn))
+
+  # ---------------------------------------------------
   get("/fruits", do: FruitController.index(conn))
   get("/fruits/new", do: FruitController.new(conn))
   get("/fruits/:id", do: FruitController.show(conn, id))
@@ -33,9 +40,7 @@ defmodule Pluggy.Router do
 
   # should be delete /fruits/:id, but put/patch/delete are not supported without hidden inputs
   post("/fruits/:id/destroy", do: FruitController.destroy(conn, id))
-
-  post("/users/login", do: UserController.login(conn, conn.body_params))
-  post("/users/logout", do: UserController.logout(conn))
+  # ---------------------------------------------------
 
   match _ do
     send_resp(conn, 404, "oops")
