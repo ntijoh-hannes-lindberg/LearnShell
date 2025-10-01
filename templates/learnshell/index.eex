@@ -4,11 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LearnShell</title>
-    <script src="/js/template_main_component.js"></script>
+    <script src="/js/terminal_main_component.js"></script>
+    <script src="/js/shell_command_component.js"></script>
+    <link rel="stylesheet" href="/pluggy.css">
 </head>
 <body>
     <h1>LearnShell</h1>
 
+    <section>
+        <img src="/img/folder.png" alt="folder">
+        <img src="/img/file.png" alt="file">
+    </section>
+    
     <terminal-main></terminal-main>
 </body>
 </html>
