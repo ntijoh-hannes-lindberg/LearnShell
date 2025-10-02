@@ -15,6 +15,20 @@ class ShellCommandComponent extends HTMLElement {
                 <input type="text">
             </form>
         </div>
+        <style>
+            input {
+                border: 2px solid black;
+                background-color: black;
+                outline: none;   
+                color: white;
+                width: 60vh;
+            }   
+            
+            strong {
+                color: rgba(40, 184, 219); 
+            }
+             
+        </style>
         `;
       return template.content.cloneNode(true);
     }
